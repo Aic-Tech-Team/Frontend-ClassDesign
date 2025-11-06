@@ -1,0 +1,264 @@
+@import "./font-face.css";
+@import "tailwindcss";
+
+/* Custom Variants */
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant hover (&:hover);
+
+/* Utilities */
+@utility container {
+  margin-inline: auto;
+
+  /* @media (min-width: 1024px) {
+    max-width: 1100px;
+  } */
+  @media (min-width: 1280px) {
+    max-width: 1280px;
+  }
+  @media (min-width: 1440px) {
+    max-width: 1280px;
+  }
+  @media (min-width: 1920px) {
+    max-width: 1550px;
+  }
+  @media (min-width: 2560px) {
+    max-width: 1900px;
+  }
+}
+@utility dir-rtl {
+  direction: rtl;
+}
+@utility dir-ltr {
+  direction: ltr;
+}
+@utility container-padding {
+  @apply px-4 xs:px-6 sm:px-10;
+}
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+@utility shadow-surround {
+  box-shadow: 0 0 60px 0 rgba(0, 0, 0, 0.1);
+}
+/* @utility bg-gradient-primary-to-* {
+  background-image: linear-gradient(
+    --value(--gradient-to-*),
+    var(--color-brand-primary-900),
+    var(--color-brand-primary-600),
+    var(--color-brand-primary-700)
+  );
+} */
+
+/* ---------- Flex ---------- */
+@utility flex-center {
+  @apply flex items-center justify-center;
+}
+@utility flex-row-* {
+  display: flex;
+  flex-direction: row;
+  justify-content: --value(--justify-*);
+  align-items: center;
+}
+@utility flex-row-reverse-* {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: --value(--justify-*);
+  align-items: center;
+}
+@utility flex-col-* {
+  display: flex;
+  flex-direction: column;
+  align-items: --value(--items-*);
+  justify-content: center;
+}
+@utility flex-col-reverse-* {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: --value(--items-*);
+  justify-content: center;
+}
+
+@theme {
+  /* *Custom font weights for typography styling */
+  --font-weight-extrablack: 950;
+
+  /* * Custom breakpoints for responsive design */
+  --breakpoint-2xs: 375px; /* Very small devices (small phones) */
+  --breakpoint-xs: 480px; /* Extra small devices (phones) */
+  --breakpoint-sm: 640px; /* Small devices (standard phones) */
+  --breakpoint-md: 768px; /* Medium devices (tablets) */
+  --breakpoint-lg: 1024px; /* Large devices (small laptops/desktops) */
+  --breakpoint-xl: 1280px; /* Extra-large devices (large laptops/desktops) */
+  --breakpoint-2xl: 1440px; /* 2x-large devices (large desktops) */
+  --breakpoint-3xl: 1920px; /* 3x-large devices (Full HD screens) */
+
+  /* * Custom gradient directions */
+  /* --gradient-to-right: to right;
+  --gradient-to-top: to top;
+  --gradient-to-bottom: to bottom;
+  --gradient-to-left: to left;
+  --gradient-to-top-right: to top right;
+  --gradient-to-top-left: to top left;
+  --gradient-to-bottom-right: to bottom right; */
+
+  /* * flex utilities  */
+  /* ---------- justify content ---------- */
+  --justify-start: flex-start;
+  --justify-end: flex-end;
+  --justify-center: center;
+  --justify-between: space-between;
+  --justify-around: space-around;
+  --justify-evenly: space-evenly;
+  --justify-stretch: stretch;
+
+  /* ---------- align items ---------- */
+  --items-center: center;
+  --items-start: start;
+  --items-end: end;
+  --items-stretch: stretch;
+  --items-baseline: baseline;
+}
+
+@theme static {
+  --font-yekanBakhFaNum: "YekanBakhFaNum", sans-serif;
+  --font-vazir: "Vazir", sans-serif;
+
+  /* * Custom colors */
+  --color-brand-primary-950: #0a0515;
+  --color-brand-primary-900: #150a2a;
+  --color-brand-primary-800: #2a1456;
+  --color-brand-primary-700: #3e1987;
+  --color-brand-primary-600: #5321b4;
+  --color-brand-primary-500: #6a32d9;
+  --color-brand-primary-400: #885be1;
+  --color-brand-primary-300: #a584e8;
+  --color-brand-primary-200: #c5b3e9;
+  --color-brand-primary-100: #e2d9f4;
+  --color-brand-primary-50: #f0ebf9;
+
+  --color-theme-light: #ffffff;
+  --color-theme-dark: #000000;
+}
+
+@layer base {
+  /* * -----------------------------------------------------
+   * ### Base Styles - Global Styles, Typography, Backgrounds
+   * -------------------------------------------------------
+     This section defines essential base styles for your 
+     project, considering Tailwind's defaults.
+   * ------------------------------------------------------- */
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  html[dir="rtl"] {
+    font-family:
+      "YekanBakhFaNum", sans-serif; /* Use Vazir for both directions */
+  }
+
+  body {
+    scroll-behavior: smooth; /* ? Enable smooth scrolling */
+    overflow-x: hidden; /* Disable horizontal scrollbar */
+  }
+
+  /* * -----------------------------------------------------
+   * ### Scrollbar Styling
+   * -------------------------------------------------------
+     Custom scrollbar for Webkit browsers (Chrome, Safari) and Firefox.
+   * ------------------------------------------------------- */
+
+  /* Webkit browsers */
+  ::-webkit-scrollbar {
+    width: 4px; /* Thin scrollbar width */
+    height: 4px; /* Thin scrollbar height */
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-brand-primary-800); /* Transparent track */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-brand-primary-400); /* Custom scrollbar thumb color */
+    border-radius: 10px; /* Rounded thumb */
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin; /* Thin scrollbar in Firefox */
+    scrollbar-color: var(--color-brand-primary-400) var(--color-brand-primary-800); /* Custom scrollbar colors */
+  }
+
+  /* * -----------------------------------------------------
+   * ### Input Number Styling
+   * -------------------------------------------------------
+     Disables increment/decrement arrows on number inputs for consistency.
+   * ------------------------------------------------------- */
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* Remove spin buttons */
+  }
+
+  input[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield; /* Remove spin buttons in Firefox */
+  }
+
+  /* * -----------------------------------------------------
+    * ### Disable Gray Highlight on Touch Devices
+    * -------------------------------------------------------
+      Prevents the default Gray highlight when tapping buttons/links on mobile.
+    * ------------------------------------------------------- */
+
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent; /* Remove highlight on touch */
+    -webkit-touch-callout: none; /* Disable touch callout in iOS */
+  }
+
+  /* * -----------------------------------------------------
+    * ### Prevent Text Selection on Interactive Elements
+    * -------------------------------------------------------
+      Disables text selection on buttons, links, images, and SVGs to improve UX.
+    * ------------------------------------------------------- */
+
+  img,
+  button,
+  a,
+  svg {
+    -webkit-user-select: none; /* Webkit browsers */
+    -khtml-user-select: none; /* Older browsers */
+    -moz-user-select: none; /* Firefox */
+    -o-user-select: none; /* Opera */
+    user-select: none; /* Disable text selection */
+  }
+
+  /* * -----------------------------------------------------
+    * ### Prevent Focus Outline for Non-Keyboard Users
+    * -------------------------------------------------------
+      Disables the outline for mouse users, but ensures accessibility for keyboard navigation.
+    * ------------------------------------------------------- */
+
+  *:focus-visible {
+    outline: none; /* Remove outline unless the user is navigating with keyboard */
+  }
+
+  /* * -----------------------------------------------------
+    * ### Text Alignment for Email and Phone Inputs
+    * -------------------------------------------------------
+      Ensures proper text alignment for email and phone inputs.
+    * ------------------------------------------------------- */
+
+  input[type="email"],
+  input[type="tel"] {
+    @apply text-left rtl:placeholder:text-right;
+  }
+
+  /* Hide the password reveal button in Edge */
+  ::-ms-reveal {
+    display: none;
+  }
+}

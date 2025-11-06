@@ -1,0 +1,130 @@
+/* * -----------------------------------------------------
+   * ### Font Face Declarations for <YourFontName>
+
+    Load custom font weights for <YourFontName> 
+    to provide typographic variety in the application.
+    Replace <YourFontName> with your actual font name.
+    Ensure font files are correctly located and accessible 
+    in the specified path.
+    
+    Font Weight Descriptions:
+    - 100: Thin
+    - 200: ExtraLight
+    - 300: Light
+    - 400: Normal (Regular)
+    - 500: Medium
+    - 600: SemiBold
+    - 700: Bold
+    - 800: ExtraBold
+    - 900: Black
+    - 950: ExtraBlack
+   * ------------------------------------------------------- */
+
+/* TODO: After config your fonts, enable NuxtFont from nuxt.config.ts */
+
+/* ---------------------------
+   Font YekanBakhFaNum
+   ---------------------------*/
+
+/* 100 - Thin */
+@font-face {
+  font-family: "YekanBakhFaNum";
+  font-weight: 100;
+  src: url("../fonts/YekanBakhFaNum/YekanBakhFaNum-Thin.ttf") format("truetype");
+  font-display: block;
+}
+/* 300 - Light */
+@font-face {
+  font-family: "YekanBakhFaNum";
+  font-weight: 300;
+  src: url("../fonts/YekanBakhFaNum/YekanBakhFaNum-Light.ttf")
+    format("truetype");
+  font-display: block;
+}
+/* 400 - Normal (Regular) */
+@font-face {
+  font-family: "YekanBakhFaNum";
+  font-weight: 400;
+  src: url("../fonts/YekanBakhFaNum/YekanBakhFaNum-Regular.ttf")
+    format("truetype");
+  font-display: block;
+}
+/* 600 - SemiBold */
+@font-face {
+  font-family: "YekanBakhFaNum";
+  font-weight: 600;
+  src: url("../fonts/YekanBakhFaNum/YekanBakhFaNum-SemiBold.ttf")
+    format("truetype");
+  font-display: block;
+}
+/* 700 - Bold */
+@font-face {
+  font-family: "YekanBakhFaNum";
+  font-weight: 700;
+  src: url("../fonts/YekanBakhFaNum/YekanBakhFaNum-Bold.ttf") format("truetype");
+  font-display: block;
+}
+/* 800 - ExtraBold */
+@font-face {
+  font-family: "YekanBakhFaNum";
+  font-weight: 800;
+  src: url("../fonts/YekanBakhFaNum/YekanBakhFaNum-ExtraBold.ttf")
+    format("truetype");
+  font-display: block;
+}
+/* 900 - Black */
+@font-face {
+  font-family: "YekanBakhFaNum";
+  font-weight: 900;
+  src: url("../fonts/YekanBakhFaNum/YekanBakhFaNum-Black.ttf")
+    format("truetype");
+  font-display: block;
+}
+/* 900 - ExtraBlack */
+@font-face {
+  font-family: "YekanBakhFaNum";
+  font-weight: 950;
+  src: url("../fonts/YekanBakhFaNum/YekanBakhFaNum-ExtraBlack.ttf")
+    format("truetype");
+  font-display: block;
+}
+
+/* ---------------------------
+   Font Vazir (Farsi Digits - FD-WOL)
+   ---------------------------*/
+
+/* 100 - Thin */
+@font-face {
+  font-family: "Vazir";
+  font-weight: 100;
+  src: url("../fonts/Vazir/Vazir-Thin-FD-WOL.ttf") format("truetype");
+  font-display: block;
+}
+/* 300 - Light */
+@font-face {
+  font-family: "Vazir";
+  font-weight: 300;
+  src: url("../fonts/Vazir/Vazir-Light-FD-WOL.ttf") format("truetype");
+  font-display: block;
+}
+/* 400 - Normal (Regular) */
+@font-face {
+  font-family: "Vazir";
+  font-weight: 400;
+  src: url("../fonts/Vazir/Vazir-FD-WOL.ttf") format("truetype");
+  font-display: block;
+}
+/* 500 - Medium */
+@font-face {
+  font-family: "Vazir";
+  font-weight: 500;
+  src: url("../fonts/Vazir/Vazir-Medium-FD-WOL.ttf") format("truetype");
+  font-display: block;
+}
+/* 700 - Bold */
+@font-face {
+  font-family: "Vazir";
+  font-weight: 700;
+  src: url("../fonts/Vazir/Vazir-Bold-FD-WOL.ttf") format("truetype");
+  font-display: block;
+}
