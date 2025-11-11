@@ -1,27 +1,24 @@
 import { createRouter, createWebHistory } from "vue-router";
-import QrRedirectView from "@/views/QrRedirectView.vue";
+import HomeView from "@/views/HomeView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/:id",
+      path: "/",
+      name: 'home',
+      component: HomeView
+    },
+    {
+      path: "/scan/:id",
       name: "qr-redirect",
-      component: QrRedirectView,
+      component: () => import("@/views/QrRedirectView.vue"),
     },
     {
       path: "/class-info/:classNumber",
       name: "class-info",
       component: () => import("@/views/ClassInfoView.vue"),
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue'),
-    // },
   ],
 });
 
