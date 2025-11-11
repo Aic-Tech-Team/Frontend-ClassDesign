@@ -1,13 +1,18 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import QrRedirectView from "@/views/QrRedirectView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
-      name: "home",
-      component: HomeView,
+      path: "/:id",
+      name: "qr-redirect",
+      component: QrRedirectView,
+    },
+    {
+      path: "/class-info/:classNumber",
+      name: "class-info",
+      component: () => import("@/views/ClassInfoView.vue"),
     },
     // {
     //   path: '/about',

@@ -7,7 +7,7 @@ import vueDevTools from "vite-plugin-vue-devtools";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/qr-aic/",
+  base: "/",
   plugins: [vue(), vueDevTools(), tailwindcss()],
   define: { "process.env": {} },
   resolve: {
