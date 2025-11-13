@@ -3,9 +3,9 @@
     class="relative isolate w-full h-dvh bg-transparent flex-col-center pointer-events-none"
   >
     <img
-      src="../assets/images/AIC_logo_notext_white.svg"
+      src="../assets/images/AIC_logo_white.png"
       alt="aic logo"
-      class="w-28 sm:w-36 absolute top-10 left-1/2 -translate-x-1/2"
+      class="w-24 absolute top-10 left-1/2 -translate-x-1/2"
     />
 
     <TextType
@@ -13,7 +13,7 @@
       :typingSpeed="75"
       :pauseDuration="1500"
       :show-cursor="false"
-      class="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-center"
+      class="text-6xl sm:pt-12 sm:text-7xl lg:text-8xl xl:text-9xl font-black text-center"
     />
 
     <a

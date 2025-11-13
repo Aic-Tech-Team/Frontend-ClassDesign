@@ -77,12 +77,12 @@
         class="absolute bottom-10 left-0 w-full flex-col-center gap-8 px-10"
       >
         <img
-          src="../assets/images/AIC_logo_colored.svg"
+          src="../assets/images/AIC_logo_white.png"
           alt="aic logo"
-          class="w-40 lg:w-52"
+          class="w-40"
         />
 
-        <p class="sm:text-sm text-center lg:text-lg text-brand-primary-100">
+        <p class="sm:text-sm text-center lg:text-lg text-white">
           ساخته شده با 🤍 انجمن علمی هوش مصنوعی
         </p>
       </section>
@@ -102,6 +102,12 @@
       :disable-rotation="false"
       class="-z-10 size-auto"
     />
+
+    <TargetCursor
+      v-if="isLargeScreen"
+      :spin-duration="5"
+      :hide-default-cursor="true"
+    />
   </main>
 </template>
 
@@ -112,6 +118,11 @@ import Hero from "../components/Hero.vue";
 import Particles from "../blocks/Particles/Particles.vue";
 import PixelCard from "../blocks/PixelCard/PixelCard.vue";
 import { useClassInfoStore } from "@/stores/classinfoStore";
+import TargetCursor from "../blocks/TargetCursor/TargetCursor.vue";
+
+import { useMediaQuery } from "@vueuse/core";
+
+const isLargeScreen = useMediaQuery("(min-width: 768px)");
 
 const route = useRoute();
 const router = useRouter();
