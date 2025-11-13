@@ -79,7 +79,7 @@
         <img
           src="../assets/images/AIC_logo_white.png"
           alt="aic logo"
-          class="w-40"
+          class="w-28 sm:w-40"
         />
 
         <p class="sm:text-sm text-center lg:text-lg text-white">
