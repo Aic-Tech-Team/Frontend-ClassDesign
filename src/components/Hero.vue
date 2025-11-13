@@ -9,7 +9,7 @@
     />
 
     <TextType
-      :text="['کلاس 311']"
+      :text="props.text"
       :typingSpeed="75"
       :pauseDuration="1500"
       :show-cursor="false"
@@ -34,5 +34,8 @@
 
 <script setup lang="ts">
 import TextType from "../blocks/TextType/TextType.vue";
-// import Particles from "../blocks/Particles/Particles.vue";
+
+const props = defineProps<{
+  text: string[];
+}>();
 </script>

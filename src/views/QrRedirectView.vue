@@ -2,21 +2,26 @@
 import { onMounted } from "vue";
 import { useClassInfoApi } from "@/composables/api/useClassInfoApi";
 import { useRoute, useRouter } from "vue-router";
+import { useClassInfoStore } from "@/stores/classinfoStore";
 
 const route = useRoute();
 const router = useRouter();
 
 const { getClassInfoAsync } = useClassInfoApi();
+const classInfoStore = useClassInfoStore();
 
 onMounted(async () => {
   try {
     const id = Number(route.params.id);
-    const response = await getClassInfoAsync(id);
-
-    const classNumber = response.number;
+    const classInfo = await getClassInfoAsync(id);
+    const classNumber = classInfo.class_number;
 
     if (classNumber) {
-      router.replace(`/class-info/${classNumber}`);
+      classInfoStore.setClassInfo(classInfo);
+      router.replace({
+        name: "class-info",
+        params: { classNumber },
+      });
     } else {
       console.error("Class number not found in API response");
     }

@@ -1,19 +1,9 @@
-export interface ClassInfo {
-  id: number;
-  name: string;
-  number: number;
-  redirect_link: string;
-  qr_code_image: string;
-  qr_url: string;
-  scientist: Scientist;
-}
+import type { ScientistBio } from "./scientistBio";
 
-export interface Scientist {
-  id: number;
-  first_name: string;
-  last_name: string;
-  full_name: string;
-  image: string;
-  description: string;
-  position: string;
+export interface ClassInfo {
+  class_id: number | null;
+  class_name: string;
+  redirect_link?: string;
+  class_number: number | null;
+  scientist: ScientistBio;
 }

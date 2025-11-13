@@ -2,7 +2,7 @@
   <main
     class="relative isolate bg-linear-to-b from-brand-primary-900 via-brand-primary-500 to-brand-primary-700"
   >
-    <Hero />
+    <Hero :text="heroText" />
 
     <div
       id="spotlight-card"
@@ -24,8 +24,8 @@
           >
             <img
               class="size-full object-cover absolute inset-0 -z-10"
-              src="../assets/images/lotfi.jpg"
-              alt="scientist image"
+              :src="scientistImage"
+              :alt="scientistName"
             />
           </PixelCard>
         </figure>
@@ -34,25 +34,13 @@
           <q
             class="text-lg 2xs:text-xl xs:text-2xl sm:text-3xl lg:text-4xl 2xl:text-5xl font-bold text-white"
           >
-            لطفی علی عسکر زاده
+            {{ scientistName }}
           </q>
 
           <p
             class="text-base 2xl:text-lg text-justify lg:pe-4 leading-relaxed xl:leading-loose font-light text-white/75 mt-4 xs:mt-6"
           >
-            ریاضی دان و دانشمند برجسته ایرانی تبار در حوزه مهندسی برق و علوم
-            رایانه بود که به عنوان بنیان گذار منطق فازی در جهان شناخته می شود.
-            او با ارائه نظریه مجموعه های فازی، الگوریتم های فازی و کنترل فازی،
-            پارادایم جدیدی در علوم محاسباتی، هوش مصنوعی و سیستم های هوشمند ایجاد
-            کرد و مسیر توسعه فناوری هایی را هموار ساخت که امروزه بخش مهمی از
-            زندگی مدرن و صنایع پیشرفته را تشکیل می دهند. تلاش ها و ایده های
-            خلاقانه او پایه گذار شاخه (محاسبات نرم) شد و نقشی اساسی در شکل گیری
-            سیستم های تصمیم گیری هوشمند داشت. پروفسور لطفی زاده سال ها استاد
-            دانشگاه کالیفرنیا برکلی بود و در طول زندگی علمی پربارش بیش از 35
-            دکترای افتخاری و جوایز معتبر بین المللی، از جمله مدال افتخار IEEE و
-            جایزه بنجامین فرانکلین را دریافت کرد. نام او امروز در کنار بزرگ ترین
-            چهره های تاریخ علم می درخشد و میراث فکری اش الهام بخش نسل های آینده
-            پژوهشگران و مهندسان است.
+            {{ scientistDescription }}
           </p>
         </section>
       </div>
@@ -94,7 +82,7 @@
           class="w-40 lg:w-52"
         />
 
-        <p class=" sm:text-sm text-center lg:text-lg text-brand-primary-100">
+        <p class="sm:text-sm text-center lg:text-lg text-brand-primary-100">
           ساخته شده با 🤍 انجمن علمی هوش مصنوعی
         </p>
       </section>
@@ -118,9 +106,77 @@
 </template>
 
 <script setup lang="ts">
+import { computed, watchEffect } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import Hero from "../components/Hero.vue";
 import Particles from "../blocks/Particles/Particles.vue";
 import PixelCard from "../blocks/PixelCard/PixelCard.vue";
+import { useClassInfoStore } from "@/stores/classinfoStore";
+
+const route = useRoute();
+const router = useRouter();
+const classInfoStore = useClassInfoStore();
+
+const fallbackHeroText = ["اطلاعات کلاس"];
+const fallbackScientistName = "نام دانشمند";
+const fallbackDescription = "توضیحات";
+const fallbackImage = new URL("../assets/images/lotfi.jpg", import.meta.url)
+  .href;
+
+const classNumber = computed(() => Number(route.params.classNumber ?? 0));
+const classInfo = computed(() => classInfoStore.classInfo);
+const scientist = computed(() => classInfo.value?.scientist ?? null);
+
+const heroText = computed(() => {
+  const classNumber = classInfo.value?.class_number;
+  const className = `${classNumber?.toString().length! < 3 ? "آتلیه" : "کلاس"} ${classNumber}`;
+  return className && className.trim().length > 0
+    ? [className]
+    : fallbackHeroText;
+});
+
+const scientistName = computed(() => {
+  const { value } = scientist;
+  if (!value) {
+    return fallbackScientistName;
+  }
+
+  const fullName = value.full_name?.trim();
+  if (fullName) {
+    return fullName;
+  }
+
+  const firstName = value.first_name?.trim() ?? "";
+  const lastName = value.last_name?.trim() ?? "";
+  const combined = `${firstName} ${lastName}`.trim();
+
+  return combined || fallbackScientistName;
+});
+
+const scientistDescription = computed(() => {
+  const description = scientist.value?.description?.trim();
+  return description || fallbackDescription;
+});
+
+const scientistImage = computed(() => scientist.value?.image ?? fallbackImage);
+
+const redirectHome = async () => {
+  try {
+    await router.replace({ name: "home" });
+  } catch {
+    window.location.href = "/";
+  }
+};
+
+watchEffect(() => {
+  if (
+    !classNumber.value ||
+    !classInfo.value ||
+    classInfo.value.class_number !== classNumber.value
+  ) {
+    void redirectHome();
+  }
+});
 </script>
 
 <style scoped>
