@@ -1,37 +1,9 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
-import { useClassInfoApi } from "@/composables/api/useClassInfoApi";
-import { useRoute, useRouter } from "vue-router";
-import { useClassInfoStore } from "@/stores/classinfoStore";
 import Particles from "../blocks/Particles/Particles.vue";
 
-const route = useRoute();
-const router = useRouter();
-
-const { getClassInfoAsync } = useClassInfoApi();
-const classInfoStore = useClassInfoStore();
-
-onMounted(async () => {
-  try {
-    const id = Number(route.params.id);
-    const classInfo = await getClassInfoAsync(id);
-    const classNumber = classInfo.class_number;
-
-    if (classNumber) {
-      classInfoStore.setClassInfo(classInfo);
-      setTimeout(() => {
-        router.replace({
-          name: "class-info",
-          params: { classNumber },
-        });
-      }, 1000);
-    } else {
-      console.error("Class number not found in API response");
-    }
-  } catch (err) {
-    console.error("Failed to fetch class info:", err);
-  }
-});
+const props = defineProps<{
+  stateText: string;
+}>();
 </script>
 
 <template>
@@ -97,7 +69,7 @@ onMounted(async () => {
       </svg>
 
       <p class="font-semibold text-white text-center text-xl animate-pulse">
-        درحال انتقال...
+        {{ props.stateText }}
       </p>
     </div>
 

@@ -1,6 +1,6 @@
 <template>
   <header
-    class="relative isolate w-full h-dvh bg-transparent flex-col-center pointer-events-none"
+    class="relative isolate w-full h-dvh bg-transparent flex-col-center pointer-events-none pt-24"
   >
     <img
       src="../assets/images/AIC_logo_white.png"
@@ -9,11 +9,20 @@
     />
 
     <TextType
-      :text="props.text"
+      v-if="props.secondaryTitle"
+      :text="props.secondaryTitle"
+      :typingSpeed="60"
+      :initial-delay="500"
+      :pauseDuration="1500"
+      :show-cursor="false"
+      class="text-xl sm:text-2xl mb-10 lg:text-3xl  font-black text-center"
+    />
+    <TextType
+      :text="props.primaryTitle"
       :typingSpeed="75"
       :pauseDuration="1500"
       :show-cursor="false"
-      class="text-6xl sm:pt-12 sm:text-7xl lg:text-8xl xl:text-9xl font-black text-center"
+      class="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-center"
     />
 
     <a
@@ -36,6 +45,7 @@
 import TextType from "../blocks/TextType/TextType.vue";
 
 const props = defineProps<{
-  text: string[];
+  primaryTitle: string[];
+  secondaryTitle?: string[];
 }>();
 </script>

@@ -10,14 +10,9 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: "/scan/:id",
-      name: "qr-redirect",
-      component: () => import("@/views/QrRedirectView.vue"),
-    },
-    {
-      path: "/class-info/:classNumber",
-      name: "class-info",
-      component: () => import("@/views/ClassInfoView.vue"),
+      path: "/places/:placeType/:placeNumber",
+      name: "places",
+      component: () => import("@/views/PlacesInfoView.vue"),
     },
   ],
 });

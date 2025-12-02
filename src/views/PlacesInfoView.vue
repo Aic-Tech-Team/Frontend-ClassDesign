@@ -1,15 +1,18 @@
 <template>
+  <WaitingState v-if="isLoading" state-text="در حال بارگذاری..." />
+
   <main
+    v-else
     class="relative isolate bg-linear-to-b from-brand-primary-900 via-brand-primary-500 to-brand-primary-700"
   >
-    <Hero :text="heroText" />
+    <Hero :primary-title="heroText" :secondary-title="['دانشکده هوش مصنوعی']" />
 
     <div
       id="spotlight-card"
       class="relative isolate lg:px-20 px-4 xs:px-8 pointer-events-none sm:mt-32 mt-24 scroll-m-12"
     >
       <div
-        class="bg-white/20 backdrop-blur-xs rounded-3xl p-4 xs:p-6 mx-auto flex gap-6 xs:gap-10 items-center max-lg:flex-col"
+        class="bg-white/15 backdrop-blur-xs rounded-3xl p-4 xs:p-6 mx-auto flex gap-6 xs:gap-10 items-center max-lg:flex-col"
       >
         <figure
           class="rounded-2xl cursor-target overflow-hidden w-full max-w-[400px] shrink-0 xs:h-[580px] pointer-events-auto backdrop-blur-xs p-2"
@@ -112,53 +115,54 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watchEffect } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import Hero from "../components/Hero.vue";
 import Particles from "../blocks/Particles/Particles.vue";
 import PixelCard from "../blocks/PixelCard/PixelCard.vue";
-import { useClassInfoStore } from "@/stores/classinfoStore";
+import { usePlaceInfoStore } from "@/stores/placeInfoStore";
 import TargetCursor from "../blocks/TargetCursor/TargetCursor.vue";
-
+import { usePlaceInfoApi } from "@/composables/api/usePlacesInfoApi";
 import { useMediaQuery } from "@vueuse/core";
+import WaitingState from "@/components/WaitingState.vue";
 
+import type { PlaceType } from "@/types/api/placeInfo";
+import type { PlaceInfo } from "@/types/api/placeInfo";
+
+const { getPlaceInfoAsync } = usePlaceInfoApi();
+const placeInfoStore = usePlaceInfoStore();
+
+const isLoading = ref(true);
 const isLargeScreen = useMediaQuery("(min-width: 768px)");
 
 const route = useRoute();
 const router = useRouter();
-const classInfoStore = useClassInfoStore();
 
-const fallbackHeroText = ["اطلاعات کلاس"];
+const fallbackHeroText = "اطلاعات اتاق";
 const fallbackScientistName = "نام دانشمند";
 const fallbackDescription = "توضیحات";
 const fallbackImage = new URL("../assets/images/lotfi.jpg", import.meta.url)
   .href;
 
-const classNumber = computed(() => Number(route.params.classNumber ?? 0));
-const classInfo = computed(() => classInfoStore.classInfo);
-const scientist = computed(() => classInfo.value?.scientist ?? null);
-
-const heroText = computed(() => {
-  const classNumber = classInfo.value?.class_number;
-  const className = `${classNumber?.toString().length! < 3 ? "آتلیه" : "کلاس"} ${classNumber}`;
-  return className && className.trim().length > 0
-    ? [className]
-    : fallbackHeroText;
-});
+const placeInfo = computed<PlaceInfo | null>(() => placeInfoStore.placeInfo);
+const scientist = computed(() => placeInfo.value?.scientist ?? null);
+const heroText = computed(() => [
+  placeInfo.value?.place_name ?? fallbackHeroText,
+]);
 
 const scientistName = computed(() => {
-  const { value } = scientist;
-  if (!value) {
+  const currentScientist = scientist.value;
+  if (!currentScientist) {
     return fallbackScientistName;
   }
 
-  const fullName = value.full_name?.trim();
+  const fullName = currentScientist.full_name?.trim();
   if (fullName) {
     return fullName;
   }
 
-  const firstName = value.first_name?.trim() ?? "";
-  const lastName = value.last_name?.trim() ?? "";
+  const firstName = currentScientist.first_name?.trim() ?? "";
+  const lastName = currentScientist.last_name?.trim() ?? "";
   const combined = `${firstName} ${lastName}`.trim();
 
   return combined || fallbackScientistName;
@@ -179,13 +183,35 @@ const redirectHome = async () => {
   }
 };
 
-watchEffect(() => {
-  if (
-    !classNumber.value ||
-    !classInfo.value ||
-    classInfo.value.class_number !== classNumber.value
-  ) {
-    void redirectHome();
+onMounted(async () => {
+  const typeParam = (
+    route.params.placeType as string | undefined
+  )?.toLowerCase() as Lowercase<PlaceType> | undefined;
+  const numberParam = Number(route.params.placeNumber);
+
+  if (!typeParam || !Number.isFinite(numberParam) || numberParam <= 0) {
+    await redirectHome();
+    return;
+  }
+
+  try {
+    isLoading.value = true;
+    const fetchedPlaceInfo = await getPlaceInfoAsync(typeParam, numberParam);
+
+    if (!fetchedPlaceInfo?.place_number) {
+      console.error("Place number not found in API response");
+      await redirectHome();
+      return;
+    }
+
+    placeInfoStore.setPlaceInfo(fetchedPlaceInfo);
+  } catch (error) {
+    console.error("Failed to fetch place info:", error);
+    await redirectHome();
+  } finally {
+    setTimeout(() => {
+      isLoading.value = false;
+    }, 1500);
   }
 });
 </script>

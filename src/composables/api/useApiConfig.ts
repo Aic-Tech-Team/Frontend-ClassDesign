@@ -1,4 +1,5 @@
 import { appConfig } from "@/config";
+import type { PlaceType } from "@/types/api/placeInfo";
 
 export const useApiConfig = () => {
   const { baseUrl } = appConfig;
@@ -6,7 +7,7 @@ export const useApiConfig = () => {
   const apiEndpoints = {
     // * Users Endpoints
     biography: (id: number) => `${baseUrl}/biography-scientist/${id}`,
-    classInfo: (id: number) => `${baseUrl}/q/${id}`,
+    placeInfo: (type: Lowercase<PlaceType>, number: number) => `${baseUrl}/q/${type}/${number}`,
     // TODO: Config your endpoints...
   };
 
