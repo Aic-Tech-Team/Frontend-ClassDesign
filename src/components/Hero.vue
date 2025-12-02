@@ -1,6 +1,6 @@
 <template>
   <header
-    class="relative isolate w-full h-dvh bg-transparent flex-col-center pointer-events-none pt-24"
+    class="relative isolate w-full h-dvh bg-transparent flex-col-center pointer-events-none pt-16 sm:pt-24"
   >
     <img
       src="../assets/images/AIC_logo_white.png"
