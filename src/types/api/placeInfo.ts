@@ -8,4 +8,5 @@ export interface PlaceInfo {
   place_number: number | null;
   place_type: PlaceType;
   scientist: ScientistBio;
+  faculty: string;
 }

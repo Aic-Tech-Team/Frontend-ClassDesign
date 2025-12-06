@@ -5,7 +5,7 @@
     v-else
     class="relative isolate bg-linear-to-b from-brand-primary-900 via-brand-primary-500 to-brand-primary-700"
   >
-    <Hero :primary-title="heroText" :secondary-title="['دانشکده هوش مصنوعی']" />
+    <Hero :primary-title="heroTitle.primary" :secondary-title="heroTitle.secondary" />
 
     <div
       id="spotlight-card"
@@ -138,7 +138,10 @@ const isLargeScreen = useMediaQuery("(min-width: 768px)");
 const route = useRoute();
 const router = useRouter();
 
-const fallbackHeroText = "اطلاعات اتاق";
+const fallbackHeroTitle = {
+  primary: "اطلاعات اتاق",
+  secondary: "نام مجتمع",
+};
 const fallbackScientistName = "نام دانشمند";
 const fallbackDescription = "توضیحات";
 const fallbackImage = new URL("../assets/images/lotfi.jpg", import.meta.url)
@@ -146,9 +149,10 @@ const fallbackImage = new URL("../assets/images/lotfi.jpg", import.meta.url)
 
 const placeInfo = computed<PlaceInfo | null>(() => placeInfoStore.placeInfo);
 const scientist = computed(() => placeInfo.value?.scientist ?? null);
-const heroText = computed(() => [
-  placeInfo.value?.place_name ?? fallbackHeroText,
-]);
+const heroTitle = computed(() => ({
+  primary: [placeInfo.value?.place_name ?? fallbackHeroTitle.primary],
+  secondary: [placeInfo.value?.faculty ?? fallbackHeroTitle.secondary],
+}));
 
 const scientistName = computed(() => {
   const currentScientist = scientist.value;
